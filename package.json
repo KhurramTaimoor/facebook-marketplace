@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
  "scripts": {
-    "start": "node index.js",
-    "postinstall": "npx playwright install --with-deps chromium"
+    "dev": "vite",
+    "build": "echo 'Skipping React build for Bot deployment'",
+    "start": "cd model && npm install && npx playwright install --with-deps chromium && node index.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",
