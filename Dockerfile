@@ -8,6 +8,9 @@ WORKDIR /app
 COPY model/package*.json ./model/
 RUN cd model && npm install
 
+# Install Chromium browser binaries
+RUN cd model && npx playwright install chromium
+
 # Copy the actual bot code
 COPY model/ ./model/
 
