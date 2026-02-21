@@ -1,18 +1,17 @@
-# Use the official Microsoft image with all browser libraries built-in
-FROM mcr.microsoft.com/playwright:v1.42.1-jammy
+FROM node:18-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy and install dependencies for the bot
-COPY model/package*.json ./model/
-RUN cd model && npm install
+# Copy frontend package.json
+COPY package*.json ./
+RUN npm install
 
-# Install Chromium browser binaries
-RUN cd model && npx playwright install chromium
+# Copy frontend source code
+COPY . .
 
-# Copy the actual bot code
-COPY model/ ./model/
+# Build the frontend
+RUN npm run build
 
-# Start the bot
-CMD ["node", "model/index.js"]
+# Serve the built frontend
+RUN npm install -g serve
+CMD ["serve", "-s", "dist", "-l", "3000"]
